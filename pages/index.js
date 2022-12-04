@@ -16,14 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className='container vh-100'>
-        <div className='row ratio ratio-16x9 h-50 justify-content-center mx-auto'>
-          <KantekChart/>
-        </div>
-        <div className='row ratio ratio-16x9h h-50 justify-content-center mx-auto'>
-          <BikunChart/>
-        </div>
-      </div>
+      
     </div>
   )
 }
