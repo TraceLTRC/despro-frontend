@@ -16,23 +16,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className='display-2 text-center'>Keramian FTUI</h1>
-      <div className='container'>
-        <div className="row">
-          <div className="col-lg-6 py-3">
-            <div className="card shadow">
-              <div className="card-body text-center">
-                <KantekChart/>
-              </div>
-            </div>
-          </div>
-          <div className="col-lg-6 py-3 ratio ">
-            <div className="card shadow">
-              <div className="card-body text-center">
-                <BikunChart/>
-              </div>
-            </div>
-          </div>
+      <div className='container vh-100'>
+        <div className='row ratio ratio-16x9 h-50 justify-content-center mx-auto'>
+          <KantekChart/>
+        </div>
+        <div className='row ratio ratio-16x9h h-50 justify-content-center mx-auto'>
+          <BikunChart/>
         </div>
       </div>
     </div>
