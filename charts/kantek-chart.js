@@ -31,7 +31,11 @@ function registerChart(dataset) {
     const options = {
         scales: {
             x: {
-                type: 'category'
+                type: 'category',
+                ticks: {
+                    maxRotation: 0,
+                    minRotation: 0,
+                }
             },
             y: {
                 type: 'linear',
@@ -41,6 +45,7 @@ function registerChart(dataset) {
             }
         },
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             title: {
                 display: true,
