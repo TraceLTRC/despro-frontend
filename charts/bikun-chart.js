@@ -16,6 +16,8 @@ import { useEffect, useState } from 'react'
 import { collection, getDocs, limit, getFirestore, orderBy, query, QuerySnapshot, where, onSnapshot } from 'firebase/firestore'
 import createFirebaseApp from '../utils/firebaseClient'
 
+import { Spinner } from 'flowbite-react'
+
 //const MAX_LOOKUP_DATE = DateTime.now().minus({'hours':12});
 const MAX_Y = 20;
 const MIN_Y = 3;
@@ -77,7 +79,7 @@ function formatData(dataSnapshot) {
         ]
     };
 
-    dataSnapshot.forEach((doc) => {
+    dataSnapshot.docs.reverse().forEach((doc) => {
         data.labels.push(DateTime.fromJSDate(doc.get('time').toDate()).toFormat('T'));
         data.datasets[0].data.push(doc.get('counts'));
     })
@@ -107,10 +109,8 @@ export default function BikunChart() {
         run();
     }, []);
 
-    if (isLoading || data === undefined) return (<p>Loading...</p>)
+    if (isLoading || data === undefined) return (<Spinner size="xl"></Spinner>)
     else if (data === null) return (<p>Error!</p>)
-
-
 
     return (
         registerChart(data)
