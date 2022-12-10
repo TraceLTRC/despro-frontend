@@ -14,28 +14,36 @@ export default function Home() {
         <title>Keramaian FTUI</title>
         <meta name="description" content="Aplikasi untuk melihat status keramaian lokasi-lokasi di FTUI" />
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-        <meta name="color-scheme" content="dark light"></meta>
+        <meta name="color-scheme" content="dark"></meta>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div>
-        <div className='flex flex-col font-sans mx-4 md:mx-24 h-screen'>
+        <div className='flex flex-col font-sans mx-4 md:mx-24 lg:mx-32 xl:mx-48 2xl:mx-64 h-screen'>
           <h1 className='text-center tracking-tight text-6xl font-light mt-2'>Keramaian FTUI</h1>
+          <div className='text-center text-lg mt-4'>Keramaian Kantin Teknik</div>
           <div className='my-4 basis-1/2 text-center align-middle'>
             <KantekChart />
           </div>
+          <div className='text-center text-lg'>Keramaian Halte Teknik</div>
           <div className='my-4 basis-1/2 text-center align-middle'>
             <BikunChart />
           </div>
         </div>
         <div className="overflow-clip fixed top-0 right-0">
-          <button onClick={() => setModalVisiblity(true)} className="w-20 h-20 bg-blue-300 fab-clip pl-8 pb-8 text-3xl font-bold font-sans">?</button>
+          <button onClick={() => setModalVisiblity(true)} className="w-20 h-20 bg-blue-700 fab-clip pl-8 pb-8 text-3xl font-sans">?</button>
         </div>
 
         <Modal show={isModalVisible} onClose={() => setModalVisiblity(false)}>
-          <Modal.Header>Hello</Modal.Header>
-          <Modal.Body>OK</Modal.Body>
-          <Modal.Footer>Bye</Modal.Footer>
+          <Modal.Header>Ini aplikasi apa?</Modal.Header>
+          <Modal.Body>
+            Selamat datang di aplikasi keramaian FTUI!
+            <br/>
+            Aplikasi ini berguna untuk melihat kondisi keramaian di beberapa lokasi FTUI seperti <b>Kantin Teknik</b> dan <b>Halte Teknik</b>
+            <br/>
+            <br/>
+            Aplikasi ini bekerja dengan menghitung banyaknya divais yang berada di suatu area. Dengan mengasumsikan bahwa satu divais sama dengan satu orang, maka kita dapat menghitung keramaian suatu lokasi.
+          </Modal.Body>
         </Modal>
       </div>
     </>

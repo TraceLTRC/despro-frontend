@@ -4,11 +4,11 @@ import {
     BarController,
     BarElement,
     LinearScale,
-    Title,
     CategoryScale,
 } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
 import { DateTime } from 'luxon'
+//import Annotation from 'chartjs-plugin-annotation'
 import 'chartjs-adapter-luxon'
 
 import { useEffect, useState } from 'react'
@@ -18,7 +18,10 @@ import createFirebaseApp from '../utils/firebaseClient'
 
 import { Spinner } from 'flowbite-react'
 
-//const MAX_LOOKUP_DATE = DateTime.now().minus({'hours':12});
+import { perc2color, scale } from '../utils/scale'
+
+const MIN_Y = 11;
+const MAX_Y = 53;
 
 Chart.register(
     Colors,
@@ -26,7 +29,6 @@ Chart.register(
     BarElement,
     CategoryScale,
     LinearScale,
-    Title
 )
 
 function registerChart(dataset) {
@@ -37,23 +39,27 @@ function registerChart(dataset) {
                 ticks: {
                     maxRotation: 0,
                     minRotation: 0,
+                    color: '#fbfbfe',
                 }
             },
             y: {
                 type: 'linear',
-                min: 11,
-                max: 53,
+                min: MIN_Y,
+                max: MAX_Y,
                 display: false,
             }
         },
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-            title: {
-                display: true,
-                text: 'Keramaian Kantek',
-                color: '#D7D6D6'
-            },
+            annotation: {
+                annotations: {
+                    box1: {
+                        type: "box",
+                        yMin: 48,
+                    }
+                }
+            }
         },
     }
 
@@ -72,7 +78,8 @@ function formatData(dataSnapshot) {
         datasets: [
             {
                 label: 'Keramaian',
-                data: []
+                data: [],
+                backgroundColor: [],
             }
         ]
     };
@@ -80,6 +87,7 @@ function formatData(dataSnapshot) {
     dataSnapshot.docs.reverse().forEach((doc) => {
         data.labels.push(DateTime.fromJSDate(doc.get('time').toDate()).toFormat('T'));
         data.datasets[0].data.push(doc.get('counts'));
+        data.datasets[0].backgroundColor.push(perc2color(scale(doc.get('counts'), MAX_Y, MIN_Y, 0, 100)))
     })
 
     return data;

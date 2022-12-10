@@ -17,6 +17,7 @@ import { collection, getDocs, limit, getFirestore, orderBy, query, QuerySnapshot
 import createFirebaseApp from '../utils/firebaseClient'
 
 import { Spinner } from 'flowbite-react'
+import { scale, perc2color } from '../utils/scale'
 
 //const MAX_LOOKUP_DATE = DateTime.now().minus({'hours':12});
 const MAX_Y = 20;
@@ -28,7 +29,6 @@ Chart.register(
     BarElement,
     CategoryScale,
     LinearScale,
-    Title
 )
 
 function registerChart(dataset) {
@@ -39,11 +39,12 @@ function registerChart(dataset) {
                 ticks: {
                     maxRotation: 0,
                     minRotation: 0,
+                    color: '#fbfbfe'
                 }
             },
             y: {
                 type: 'linear',
-                min: 0,
+                min: MIN_Y,
                 max: MAX_Y,
                 display: false,
             }
@@ -51,11 +52,6 @@ function registerChart(dataset) {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-            title: {
-                display: true,
-                text: 'Keramaian Halte',
-                color: '#D7D6D6'
-            },
         },
     }
 
@@ -74,7 +70,8 @@ function formatData(dataSnapshot) {
         datasets: [
             {
                 label: 'Keramaian',
-                data: []
+                data: [],
+                backgroundColor: [],
             }
         ]
     };
@@ -82,6 +79,7 @@ function formatData(dataSnapshot) {
     dataSnapshot.docs.reverse().forEach((doc) => {
         data.labels.push(DateTime.fromJSDate(doc.get('time').toDate()).toFormat('T'));
         data.datasets[0].data.push(doc.get('counts'));
+        data.datasets[0].backgroundColor.push(perc2color(scale(doc.get('counts'), MAX_Y, MIN_Y, 0, 100)))
     })
 
     return data;
