@@ -19,14 +19,14 @@ export default function Home() {
       </Head>
 
       <div>
-        <div className='flex flex-col font-sans mx-4 md:mx-24 lg:mx-32 xl:mx-48 2xl:mx-64 h-screen'>
+        <div className='flex flex-col font-sans mx-4 md:mx-24 lg:mx-32 xl:mx-48 2xl:mx-64 h-screen items-stretch'>
           <h1 className='text-center tracking-tight text-6xl font-light mt-2'>Keramaian FTUI</h1>
           <div className='text-center text-lg mt-4'>Keramaian Kantin Teknik</div>
-          <div className='my-4 basis-1/2 text-center align-middle'>
+          <div className='my-4 basis-1/2 text-center'>
             <KantekChart />
           </div>
           <div className='text-center text-lg'>Keramaian Halte Teknik</div>
-          <div className='my-4 basis-1/2 text-center align-middle'>
+          <div className='my-4 basis-1/2 text-center'>
             <BikunChart />
           </div>
         </div>

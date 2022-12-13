@@ -3,6 +3,9 @@ export function scale(x, inMax, inMin, outMax, outMin) {
 }
 
 export function perc2color(perc) {
+	if (perc < 0) perc = 0;
+	if (perc > 100) perc = 100;
+
 	var r, g, b = 0;
 	if(perc < 50) {
 		r = 255;

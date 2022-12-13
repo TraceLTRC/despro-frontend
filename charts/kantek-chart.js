@@ -20,8 +20,8 @@ import { Spinner } from 'flowbite-react'
 
 import { perc2color, scale } from '../utils/scale'
 
-const MIN_Y = 11;
-const MAX_Y = 53;
+const MIN_Y = 0;
+const MAX_Y = 40;
 
 Chart.register(
     Colors,
