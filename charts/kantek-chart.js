@@ -37,9 +37,10 @@ function registerChart(dataset) {
             x: {
                 type: 'category',
                 ticks: {
-                    maxRotation: 0,
-                    minRotation: 0,
+                    maxRotation: 45,
+                    minRotation: 45,
                     color: '#fbfbfe',
+                    autoSkip: false,
                 }
             },
             y: {
