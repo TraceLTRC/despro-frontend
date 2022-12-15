@@ -27,7 +27,8 @@ export default function Home() {
           </div>
           <div className='text-center text-lg'>Keramaian Halte Teknik</div>
           <div className='my-4 basis-1/2 text-center'>
-            <BikunChart />
+            {/* <BikunChart /> */}
+            <p>Coming soon!</p>
           </div>
         </div>
         <div className="overflow-clip fixed top-0 right-0">
