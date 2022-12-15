@@ -52,14 +52,6 @@ function registerChart(dataset) {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-            annotation: {
-                annotations: {
-                    box1: {
-                        type: "box",
-                        yMin: 48,
-                    }
-                }
-            }
         },
     }
 
@@ -102,7 +94,7 @@ export default function KantekChart() {
             setLoading(true);
             const db = getFirestore(createFirebaseApp());
             const countColl = collection(db, 'counts');
-            const q = query(countColl, orderBy("time", "desc"), where('id', '==', 'kantek'), limit(25));
+            const q = query(countColl, orderBy("time", "desc"), where('id', '==', 'kantek'), limit(15));
 
             onSnapshot(q, (querySnapshot) => {
                 if (querySnapshot.empty) setData(null);
