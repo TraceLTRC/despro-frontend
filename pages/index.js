@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import React, { useState } from 'react';
-import BikunChart from '../charts/bikun-chart';
-import KantekChart from '../charts/kantek-chart';
+import KantekChart from '../components/kantek-chart';
 
-import { Modal } from 'flowbite-react'
+import { Modal, Progress } from 'flowbite-react'
+import KantekBattery from '../components/kantek-battery';
 
 export default function Home() {
   const [isModalVisible, setModalVisiblity] = useState(false);
@@ -21,14 +21,12 @@ export default function Home() {
       <div>
         <div className='flex flex-col font-sans mx-4 md:mx-24 lg:mx-32 xl:mx-48 2xl:mx-64 h-screen items-stretch'>
           <h1 className='text-center tracking-tight text-6xl font-light mt-2'>Keramaian FTUI</h1>
-          <div className='text-center text-lg mt-4'>Keramaian Kantin Teknik</div>
+          <div className='text-center text-xl mt-4'>Keramaian Kantin Teknik</div>
           <div className='my-4 basis-1/2 text-center'>
-            <KantekChart />
+            <KantekChart/>
           </div>
-          <div className='text-center text-lg'>Keramaian Halte Teknik</div>
           <div className='my-4 basis-1/2 text-center'>
-            {/* <BikunChart /> */}
-            <p>Coming soon!</p>
+            <KantekBattery/>
           </div>
         </div>
         <div className="overflow-clip fixed top-0 right-0">
