@@ -1,4 +1,4 @@
-import { collection, getDocs, getFirestore, limitToLast, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, getFirestore, limitToLast, onSnapshot, orderBy, query, QuerySnapshot } from "firebase/firestore";
 import { Progress, Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { scale } from "../utils/scale";
@@ -18,21 +18,23 @@ function getBatteryColor(batValue) {
     }
 }
 
-async function getBatteryFromFirestore() {
-    const db = getFirestore(createFirebaseApp());
-    const col = collection(db, 'counts');
-    const q = query(col, limitToLast(1), orderBy('time', 'asc'));
+/**
+ * 
+ * @param {QuerySnapshot<import("@firebase/firestore").DocumentData>} dataSnapshot 
+ * @returns 
+ */
+function getBatteryFromDoc(dataSnapshot) {
 
-    let doc = await getDocs(q);
-    if (doc.empty) return 0;
+    let doc = dataSnapshot.docs[0];
+    if (!doc.exists()) return 0;
 
-    const bat = doc.docs[0].get('bat') ?? BAT_MIN;
+    const bat = doc.get('bat') ?? BAT_MIN;
     const color = getBatteryColor(bat);
 
     return [scale(bat, BAT_MAX, BAT_MIN, 100, 0), color];
 }
 
-export default function() {
+export default function KantekBattery() {
     const [progColor, setProgColor] = useState('red');
     const [batValue, setBatValue] = useState(null);
     const [isLoading, setLoading] = useState(true);
@@ -40,15 +42,23 @@ export default function() {
     useEffect(() => {
         async function run() {
             setLoading(true);
-            const [bat, color] = await getBatteryFromFirestore();
-            setBatValue(bat);
-            setProgColor(color);
+            
+            const db = getFirestore(createFirebaseApp());
+            const col = collection(db, 'counts');
+            const q = query(col, limitToLast(1), orderBy('time', 'asc'));
+
+            onSnapshot(q, (docs) => {
+                const [bat, color] = getBatteryFromDoc(docs);
+                setBatValue(bat);
+                setProgColor(color);
+            })
+
             setLoading(false);
         }
         run();
     }, []);
 
-    if (isLoading) {
+    if (isLoading || batValue === null) {
         return <Spinner size="xl"/>;
     }
 
